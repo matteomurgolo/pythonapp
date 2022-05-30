@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div>
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.content }}</td>
+        <td>
+            <a href="delete/{{task.id}}">&#x274C</a>
+            <a href="update/{{task.id}}">&#x2753</a>
+            {% if task.like == True %}
+            <a href="unlike/{{task.id}}">&#x1F497</a>
+            {% endif %}
+            {% if task.like == False %}
+            <a href="like/{{task.id}}">&#x1F4A1</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content" autocomplete="off">
+        <input type="submit" value="Add Task">
+    </form>
+</div>
+{% endblock %}
