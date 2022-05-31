@@ -8,6 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todolist.db'
 
 db = SQLAlchemy(app)
 
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(300), nullable=False)
@@ -16,7 +17,8 @@ class Todo(db.Model):
     def __rep__(self):
         return '<Task %r>' % self.id
 
-@app.route('/', methods=['POST','GET'])
+
+@app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
         task_content = request.form['content']
@@ -33,6 +35,7 @@ def index():
         tasks = Todo.query.all()
         return render_template("index.html", tasks=tasks)
 
+
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
@@ -43,7 +46,8 @@ def delete(id):
     except:
         return 'There was an error while deleting that task'
 
-@app.route('/update/<int:id>', methods=['GET','POST'])
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Todo.query.get_or_404(id)
 
@@ -59,6 +63,7 @@ def update(id):
     else:
         return render_template('update.html', task=task)
 
+
 @app.route('/like/<int:id>')
 def like(id):
     task_to_like = Todo.query.get_or_404(id)
@@ -70,6 +75,7 @@ def like(id):
         return redirect('/')
     except:
         return 'There was an error while liking that task'
+
 
 @app.route('/unlike/<int:id>')
 def unlike(id):
